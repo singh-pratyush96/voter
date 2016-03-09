@@ -1,1 +1,14 @@
-{{ question }}
+<p style="font-size:25px">
+    The question is -
+</p>
+<h1>
+    {{ question }}
+</h1>
+<table width="200" border="1">
+    {% for choice in question.choice_set.all %}
+        <tr>
+            <td>{{ choice.choice_text }}</td>
+            <td>({{ choice.votes }})</td>
+        </tr>
+    {% endfor %}
+</table>
