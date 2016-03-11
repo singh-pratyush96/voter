@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views import generic
@@ -20,6 +20,14 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/details.html'
+
+    def get_object(self, queryset=None):
+        try:
+            a = Question.objects.get(pub_date__lte=timezone.now())
+        except:
+            raise Http404('Not found')
+
+        return a
 
 
 class ResultsView(generic.DetailView):
